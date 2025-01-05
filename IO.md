@@ -3,12 +3,12 @@
 ## **1. I/O Models Overview**
 I/O operations are categorized into combinations of synchronous/asynchronous and blocking/non-blocking:
 
-| **Model**                  | **Description**                                                                                                                                 | **Examples**                                         |
+| **Model**                  | **Description**                                                                                                                                 | **Examples**                                        |
 |----------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
-| **Synchronous Blocking**   | Thread blocks while waiting for I/O readiness and execution.                                                                                   | Traditional file I/O in many programming languages. |
-| **Synchronous Non-blocking** | Thread does not block while waiting for readiness but performs the I/O operations itself.                                                      | `select`, `poll`, or `epoll` readiness notification |
-| **Asynchronous Blocking**  | Not common. Combines asynchronous readiness with blocking I/O calls.                                                                           | Rarely implemented.                                 |
-| **Asynchronous Non-blocking** | Operations are queued, and the thread is notified upon I/O completion.                                                                        | `io_uring`, Python’s `asyncio`.                  |
+| **Synchronous Blocking**   | Thread blocks while waiting for I/O readiness and execution.                                                                                    | Traditional file I/O in many programming languages. |
+| **Synchronous Non-blocking** | Thread does not block while waiting for readiness but performs the I/O operations itself.                                                     | `select`, `poll`, or `epoll` readiness notification |
+| **Asynchronous Blocking**  | Not common. Combines asynchronous readiness with blocking I/O calls.                                                                            | Rarely implemented.                                 |
+| **Asynchronous Non-blocking** | Operations are queued, and the thread is notified upon I/O completion.                                                                       | `io_uring`, Python’s `asyncio`.                     |
 
 ---
 
@@ -29,6 +29,7 @@ An **event loop** is a core component of asynchronous frameworks. It:
 - Implements the **Asynchronous Non-blocking I/O model**.
 - Often integrates with `epoll` or equivalent APIs for readiness notifications.
 
+  **Tip: the single thread for event loop should only handle the IO readiness but I/O operations (reading or writing), since then it will block and hang.**
 ---
 
 ## **3. Reactor Pattern**
